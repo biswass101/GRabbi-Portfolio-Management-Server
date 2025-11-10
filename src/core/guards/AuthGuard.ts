@@ -13,11 +13,12 @@ export class AuthGuard {
     handle(req: Request, res: Response, next: NextFunction): void {
         try {
             const authHeader = req.headers.authorization;
-            if(!authHeader || !authHeader.startsWith("Bearer ")) {
+            console.log(req.user);
+            if(!authHeader) {
                 throw new ApiError(htttpStatus.UNAUTHORIZED, "Unauthorized: Missing token");
             }
 
-            const token = authHeader.split(" ")[1];
+            const token = authHeader;
             const decoded = this.jwtService.verify(token);
 
             (req as any).user = decoded;

@@ -8,6 +8,7 @@ import { UserRepository } from "../../user/repositories/UserRepository";
 import { IAuth } from "../models/auth.model";
 import httpStatus from "http-status";
 import { AuthRepository } from "../repositories/AuthRepository";
+import { JwtPayload } from "jsonwebtoken";
 
 export class AuthService {
   constructor(
@@ -54,6 +55,31 @@ export class AuthService {
       refreshToken,
       isUserExists,
     };
+  }
+
+
+  async changePassword (
+    userData: JwtPayload, 
+    payload: { oldPassword: string, newPassword: string}) 
+  {
+    const user = await this.userRopo.findById(userData.userId)
+  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found!");
+
+  const isPasswordMatched = await this.hashService.compare(
+    payload.oldPassword,
+    user.password
+  );
+
+  if (!isPasswordMatched)
+    throw new ApiError(httpStatus.FORBIDDEN, "Passowrd did not matched!");
+
+  const newHashPassword = await this.hashService.hash(payload.newPassword);
+
+  const result = await this.userRopo.update(
+    user._id?.toString() as string,
+    {password: newHashPassword}    
+  );
+  return result;
   }
 
   async createRefreshToken(userId: string, token: string, req: Request) {

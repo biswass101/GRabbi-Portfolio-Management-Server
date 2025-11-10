@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { UserRepository } from "../../user/repositories/UserRepository";
 import { HashService } from "../../../core/utils/hash.service";
-import { UserService } from "../../user/services/UserService";
 import { UserController } from "../../user/controllers/UserController";
 import { AuthService } from "../services/AuthService";
 import { JwtService } from "../../../core/utils/jwt";
@@ -47,6 +46,16 @@ export class AuthController {
       success: true,
       message: "Loign Successfully",
       data: { accessToken, isUserExists, tokenResult},
+    });
+  }
+
+  async changePassword(req: Request, res: Response) {
+    const result = await authService.changePassword(req?.user as any, req.body);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Password Changed Successfully",
+      data: result,
     });
   }
 }
