@@ -15,7 +15,7 @@ export class UserRepository implements IRepository<IUser> {
   }
 
   async findByEmail(email: string): Promise<IUser | null> {
-    return await UserModel.findOne({email});
+    return await UserModel.findOne({ email });
   }
 
   async update(id: string, data: Partial<IUser>): Promise<IUser | null> {

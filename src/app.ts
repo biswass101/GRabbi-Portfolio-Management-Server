@@ -1,5 +1,5 @@
 import express, { Application } from "express";
-import dotenv from "dotenv";
+import cookieParser from "cookie-parser"; 
 import { connectDB } from "./config/db.config";
 import routes from "./routes";
 import { globalErrorHanlder } from "./shared/middlewares/globalErrorHandler";
@@ -17,7 +17,8 @@ export class App {
 
   private config(): void {
     this.app.use(express.json());
-    this.app.use(express.urlencoded({extended: true}))
+    this.app.use(cookieParser());
+    this.app.use(express.urlencoded({extended: true}));
   }
 
   private routes(): void {

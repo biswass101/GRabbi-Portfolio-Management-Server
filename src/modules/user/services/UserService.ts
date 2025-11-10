@@ -3,14 +3,18 @@ import { IUser } from "../models/User.model";
 import bcrypt from "bcrypt";
 import ApiError from "../../../shared/utils/apiError";
 import httpStatus from "http-status";
+import { HashService } from "../../../core/utils/hash.service";
 
 export class UserService {
-  constructor(private userRepo: UserRepository) {}
+  constructor(
+    private userRepo: UserRepository,
+    private hashService: HashService 
+  ) {}
 
   async createUser(user: IUser): Promise<IUser> {
     const isExists = await this.userRepo.findByEmail(user.email);
     if(isExists) throw new ApiError(httpStatus.CONFLICT, "User Already Exists");
-    const hashed = await bcrypt.hash(user.password, 10);
+    const hashed = await this.hashService.hash(user.password);
     user.password = hashed
     return await this.userRepo.create(user) as IUser;
   }

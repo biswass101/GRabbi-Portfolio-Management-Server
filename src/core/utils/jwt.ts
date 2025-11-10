@@ -1,23 +1,38 @@
 import jwt from 'jsonwebtoken';
 
-type MyJwtPayload = { userId: string; role: string };
+export interface IJwtConfig {
+  secret: string;
+  expiresIn?: string;
+}
+
+interface IMyJwtPayload { 
+    sub: string; 
+    role: string;
+    [key : string] : any
+};
 
 export class JwtService {
     private secret: string;
     private expiresIn: string;
 
 
-    constructor(secret: string, expiresIn: string = "1d") {
-        this.secret = secret;
-        this.expiresIn = expiresIn;
+    constructor(config: IJwtConfig) {
+        this.secret = config.secret;
+        this.expiresIn = config.expiresIn ?? "1d";
     }
 
 
-    sign(payload: MyJwtPayload): string {
-        return (jwt as any).sign(payload, this.secret, { expiresIn: this.expiresIn })
+    sign(payload: IMyJwtPayload, options?: Partial<IJwtConfig>): string {
+        return (jwt as any).sign(
+            payload, 
+            options?.secret ?? this.secret, 
+            { 
+                expiresIn: options?.expiresIn ?? this.expiresIn 
+            }
+        )
     }
 
-    verify<T = any>(token: string): T {
-        return jwt.verify(token, this.secret) as T;
+    verify<T = any>(token: string, secret?: string): T {
+        return jwt.verify(token, secret ?? this.secret) as T;
     }
 }
