@@ -5,8 +5,6 @@ import { CreateUserDTO } from "../dtos/CreateUserDTO";
 import { UpdateUserDTO } from "../dtos/UpdateUserDTO";
 
 
-console.log("DTO test:", CreateUserDTO);
-
 const router = Router();
 const userController = new UserController();
 

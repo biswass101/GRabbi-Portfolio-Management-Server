@@ -4,7 +4,6 @@ import { connectDB } from "./config/db.config";
 import routes from "./routes";
 import { globalErrorHanlder } from "./shared/middlewares/globalErrorHandler";
 
-dotenv.config();
 
 export class App {
   public app: Application;
