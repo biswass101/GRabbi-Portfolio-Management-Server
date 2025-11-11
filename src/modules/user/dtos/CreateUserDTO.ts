@@ -17,7 +17,7 @@ export class CreateUserDTO  {
   password: string;
 
   @IsEnum(UserRole, {
-    message: "Role must be one of: admin, user, or manager",
+    message: "Role must be admin",
   })
   @IsNotEmpty({ message: "Role is required" })
   role: UserRole;

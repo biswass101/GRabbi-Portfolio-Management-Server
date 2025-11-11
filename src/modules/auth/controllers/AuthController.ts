@@ -45,7 +45,7 @@ export class AuthController {
       statusCode: httpStatus.OK,
       success: true,
       message: "Loign Successfully",
-      data: { accessToken, isUserExists, tokenResult},
+      data: { accessToken,  userId: isUserExists._id?.toString() as string }
     });
   }
 
@@ -56,6 +56,63 @@ export class AuthController {
       success: true,
       message: "Password Changed Successfully",
       data: result,
+    });
+  }
+
+  async refreshToken (req: Request, res: Response) {
+    const result = await authService.refreshToken(req.cookies.refreshToken);
+    
+    const { newRefreshToken, newAccessToken, userId } = result;
+    await authService.createRefreshToken(userId, newRefreshToken, req);
+
+    res.cookie("refreshToken", newRefreshToken, {
+      secure: config.app.env === "production",
+      httpOnly: true,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+    });
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Token is refresed Successfully",
+      data: { newAccessToken },
+    });
+  }
+
+  async forgetPassword (req: Request, res: Response) {
+    const result = await authService.forgetPassword(req.body.email);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Please Check your email",
+      data: result,
+    });
+  }
+
+ async resetPassword (req: Request, res: Response) {
+    const token = req.headers.authorization as string;
+    const result = await authService.resetPassword(req.body, token);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Password has been reset",
+      data: result,
+    });
+  }
+
+   async logoutUser (req: Request, res: Response) {
+    const { refreshToken } = req.cookies;
+    await authService.logoutUser(refreshToken, req.headers["user-agent"] as string);
+    res.clearCookie("refreshToken", {
+      secure: config.app.env === "production",
+      httpOnly: true,
+      sameSite: "none",
+    });
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Logout Successfully",
+      data: null,
     });
   }
 }

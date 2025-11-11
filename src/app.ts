@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import { connectDB } from "./config/db.config";
 import routes from "./routes";
 import { globalErrorHanlder } from "./shared/middlewares/globalErrorHandler";
+import notFound from "./shared/middlewares/notFound";
 
 
 export class App {
@@ -10,9 +11,10 @@ export class App {
 
   constructor() {
     this.app = express();
+    connectDB();
     this.config();
     this.routes();
-    connectDB();
+    this.middlewares();
   }
 
   private config(): void {
@@ -23,6 +25,11 @@ export class App {
 
   private routes(): void {
     this.app.use("/api/v1", routes);
+    
+  }
+
+  private middlewares(): void {
+    this.app.use(notFound);
     this.app.use(globalErrorHanlder);
   }
 }

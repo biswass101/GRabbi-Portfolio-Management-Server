@@ -33,6 +33,8 @@ export class JwtService {
     }
 
     verify<T = any>(token: string, secret?: string): T {
+        console.log("Token", token)
+        console.log("Secret", secret);
         return jwt.verify(token, secret ?? this.secret) as T;
     }
 }

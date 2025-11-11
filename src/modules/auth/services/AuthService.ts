@@ -9,6 +9,8 @@ import { IAuth } from "../models/auth.model";
 import httpStatus from "http-status";
 import { AuthRepository } from "../repositories/AuthRepository";
 import { JwtPayload } from "jsonwebtoken";
+import { createEmailHtml } from "../../../html/ui/resetUi";
+import sendEmail from "../../../shared/utils/sendEmail";
 
 export class AuthService {
   constructor(
@@ -57,35 +59,137 @@ export class AuthService {
     };
   }
 
+  async changePassword(
+    userData: JwtPayload,
+    payload: { oldPassword: string; newPassword: string }
+  ) {
+    const user = await this.userRopo.findById(userData.sub as string);
+    if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found!");
 
-  async changePassword (
-    userData: JwtPayload, 
-    payload: { oldPassword: string, newPassword: string}) 
-  {
-    const user = await this.userRopo.findById(userData.userId)
-  if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found!");
+    const isPasswordMatched = await this.hashService.compare(
+      payload.oldPassword,
+      user.password
+    );
 
-  const isPasswordMatched = await this.hashService.compare(
-    payload.oldPassword,
-    user.password
-  );
+    if (!isPasswordMatched)
+      throw new ApiError(httpStatus.FORBIDDEN, "Passowrd did not matched!");
 
-  if (!isPasswordMatched)
-    throw new ApiError(httpStatus.FORBIDDEN, "Passowrd did not matched!");
+    const newHashPassword = await this.hashService.hash(payload.newPassword);
 
-  const newHashPassword = await this.hashService.hash(payload.newPassword);
+    const result = await this.userRopo.update(user._id?.toString() as string, {
+      password: newHashPassword,
+    });
+    return result;
+  }
 
-  const result = await this.userRopo.update(
-    user._id?.toString() as string,
-    {password: newHashPassword}    
-  );
-  return result;
+  async refreshToken(oldToken: string) {
+    if (!oldToken)
+      throw new ApiError(
+        httpStatus.UNAUTHORIZED,
+        "Token not Found. Unauthorized User!"
+      );
+
+    const decoded = this.jwtService.verify(
+      oldToken,
+      config.jwt.refreshSecret as string
+    ) as JwtPayload;
+    if (!decoded)
+      throw new ApiError(
+        httpStatus.UNAUTHORIZED,
+        "Couldn't verify the token. Unauthorized User!"
+      );
+
+    const { userId } = decoded;
+
+    const existingToken = await this.authRepo.getRefreshToken(
+      decoded.userId as string
+    );
+    if (!existingToken)
+      throw new ApiError(httpStatus.UNAUTHORIZED, "Token expired or invalid!");
+
+    const user = await this.userRopo.findById(userId);
+    if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found!");
+
+    const jwtPayload = {
+      sub: user._id?.toString() as string,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+
+    const newAccessToken = this.jwtService.sign(jwtPayload, {
+      secret: config.jwt.secret,
+      expiresIn: config.jwt.expiresIn,
+    });
+    const newRefreshToken = this.jwtService.sign(jwtPayload, {
+      secret: config.jwt.refreshSecret,
+      expiresIn: config.jwt.refreshExpiresIn,
+    });
+    return { newAccessToken, newRefreshToken, userId };
+  }
+
+  async forgetPassword(email: string) {
+    const user = await this.userRopo.findByEmail(email);
+    if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found!");
+
+    const jwtPayload = {
+      sub: user._id?.toString() as string,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+
+    const resetPassToken = this.jwtService.sign(jwtPayload, {
+      secret: config.jwt.resetSecret as string,
+      expiresIn: config.jwt.resetExpiresIN as string,
+    });
+
+    const resetUILink = `${config.clientSite.reset_pass_ui_link}?id=${user?._id}&token=${resetPassToken}`;
+    const resetUI = createEmailHtml(user?.name, resetUILink);
+    sendEmail(user?.email, "Reset your password", resetUI);
+  }
+
+  async resetPassword(
+    payload: { id: string; newPassword: string },
+    token: string
+  ) {
+    const user = await this.userRopo.findById(payload.id);
+    if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found!");
+
+    const decoded = this.jwtService.verify(
+      token,
+      config.jwt.resetSecret as string
+    ) as JwtPayload;
+    if (payload.id !== decoded.sub)
+    {
+      throw new ApiError(httpStatus.FORBIDDEN, "Forbidden Access!");
+    }
+    const hashNewPassword = await this.hashService.hash(payload?.newPassword);
+    await this.userRopo.update(decoded.sub, { password: hashNewPassword });
+  }
+
+  async logoutUser(token: string, userAgent: string) {
+    const decoded = this.jwtService.verify(
+      token,
+      config.jwt.refreshSecret as string
+    ) as JwtPayload;
+    if (!decoded) throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid Token");
+
+    const user = await this.userRopo.findById(decoded.userId);
+    if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found!");
+
+    await this.deleteRefreshTokens(token, userAgent);
+
+    return { message: "User logged out successfully" };
   }
 
   async createRefreshToken(userId: string, token: string, req: Request) {
     const tokenHash = await this.hashService.hash(token);
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-    const result1 = await this.deleteRefreshTokens(userId, req.headers["user-agent"] as string)
+    const result1 = await this.deleteRefreshTokens(
+      userId,
+      req.headers["user-agent"] as string
+    );
     console.log(userId);
     const result = await this.authRepo.createRefreshToken({
       userId,
@@ -99,6 +203,6 @@ export class AuthService {
   }
 
   async deleteRefreshTokens(userId: string, userAgent: string) {
-      return await this.authRepo.deleteRefreshTokens(userId, userAgent);
+    return await this.authRepo.deleteRefreshTokens(userId, userAgent);
   }
 }

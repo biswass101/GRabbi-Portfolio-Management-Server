@@ -1,30 +1,56 @@
 import { NextFunction, Request, Response } from "express";
 import { JwtService } from "../utils/jwt";
 import ApiError from "../../shared/utils/apiError";
-import htttpStatus from 'http-status'
+import httpStatus from "http-status";
+import { config } from "../../config/env.config";
+import { JwtPayload } from "jsonwebtoken";
+import { userService } from "../../modules/user/controllers/UserController";
 
 export class AuthGuard {
-    private jwtService: JwtService;
+  private jwtService: JwtService;
 
-    constructor(jwtService: JwtService) {
-        this.jwtService = jwtService;
+  constructor(jwtService: JwtService) {
+    this.jwtService = jwtService;
+  }
+
+  async handle(req: Request, res: Response, next: NextFunction) {
+    try {
+      const token = req.headers.authorization;
+      if (!token)
+        throw new ApiError(
+          httpStatus.UNAUTHORIZED,
+          "Token Not Found. Unauthorized user!"
+        );
+      const decoded = this.jwtService.verify(
+        token,
+        config.jwt.secret
+      ) as JwtPayload;
+
+      if (!decoded)
+        throw new ApiError(
+          httpStatus.UNAUTHORIZED,
+          "Could not verify token. Unauthorized user"
+        );
+      const { sub, role } = decoded;
+
+      const user = await userService.getUserById(sub as string);
+      
+      if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found!");
+      if (role !== 'admin')
+        throw new ApiError(
+          httpStatus.UNAUTHORIZED,
+          "Role mismatched. Unauthorized!"
+        );
+      console.log(user);
+
+      req.user = decoded as JwtPayload;
+
+      next();
+    } catch (error: any) {
+      throw new ApiError(
+        httpStatus.UNAUTHORIZED,
+        "Unauthorized or invalid token"
+      );
     }
-
-    handle(req: Request, res: Response, next: NextFunction): void {
-        try {
-            const authHeader = req.headers.authorization;
-            console.log(req.user);
-            if(!authHeader) {
-                throw new ApiError(htttpStatus.UNAUTHORIZED, "Unauthorized: Missing token");
-            }
-
-            const token = authHeader;
-            const decoded = this.jwtService.verify(token);
-
-            (req as any).user = decoded;
-            next();
-        } catch (error: any) {
-            throw new ApiError(htttpStatus.UNAUTHORIZED, "Unauthorized or invalid token")
-        }
-    }
+  }
 }

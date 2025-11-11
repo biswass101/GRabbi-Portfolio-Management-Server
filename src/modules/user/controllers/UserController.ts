@@ -7,7 +7,7 @@ import { HashService } from "../../../core/utils/hash.service";
 
 const userRepo = new UserRepository();
 const hashService = new HashService();
-const userService = new UserService(userRepo, hashService);
+export const userService = new UserService(userRepo, hashService);
 
 export class UserController {
   async create(req: Request, res: Response) {
