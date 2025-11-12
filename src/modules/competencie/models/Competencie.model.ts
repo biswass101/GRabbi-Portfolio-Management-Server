@@ -1,13 +1,13 @@
 import mongoose, { Schema } from "mongoose";
 
-export interface ICompetency extends Document {
+export interface ICompetencie extends Document {
   userId: Schema.Types.ObjectId;
   icon: string;
   title: string;
   description: string;
 }
 
-const CompetencySchema = new Schema<ICompetency>(
+const CompetencieSchema = new Schema<ICompetencie>(
   {
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     icon: { type: String, required: true },
@@ -17,7 +17,7 @@ const CompetencySchema = new Schema<ICompetency>(
   { timestamps: true }
 );
 
-export const CompetencyModel = mongoose.model<ICompetency>(
-  "Competency",
-  CompetencySchema
+export const CompetencieModel = mongoose.model<ICompetencie>(
+  "Competencie",
+  CompetencieSchema
 );
