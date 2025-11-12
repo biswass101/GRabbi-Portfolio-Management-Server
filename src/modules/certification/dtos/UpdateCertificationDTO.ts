@@ -1,7 +1,6 @@
 import { IsNotEmpty, IsOptional } from "class-validator";
 
 export class UpdateCertificationDTO  {
-
   @IsOptional()
   @IsNotEmpty({ message: "Icon is required" })
   icon: string;

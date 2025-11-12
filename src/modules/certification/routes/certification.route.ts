@@ -6,24 +6,24 @@ import { UpdateCertificationDTO } from "../dtos/UpdateCertificationDTO";
 
 
 const router = Router();
-const certificaionController = new CertificationController();
+const certificationController = new CertificationController();
 
 router.get("/", 
-    certificaionController.getAll.bind(certificaionController)
+    certificationController.getAll.bind(certificationController)
 );
 router.get("/:id", 
-    certificaionController.getOne.bind(certificaionController)
+    certificationController.getOne.bind(certificationController)
 );
 router.post("/", 
     validateDTO(CreateCertificationDTO), 
-    certificaionController.create.bind(certificaionController)
+    certificationController.create.bind(certificationController)
 );
 router.patch("/:id", 
     validateDTO(UpdateCertificationDTO), 
-    certificaionController.update.bind(certificaionController)
+    certificationController.update.bind(certificationController)
 );
 router.delete("/:id", 
-    certificaionController.delete.bind(certificaionController)
+    certificationController.delete.bind(certificationController)
 )
 
 export { router as certificationRoutes };
