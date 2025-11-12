@@ -7,7 +7,6 @@ export interface ICertification extends Document {
   title: string;
   provider: string;
   duration: string;
-  color: string;
 }
 
 const CertificationSchema = new Schema<ICertification>(
@@ -17,12 +16,11 @@ const CertificationSchema = new Schema<ICertification>(
     title: { type: String, required: true },
     provider: { type: String, required: true },
     duration: { type: String, required: true },
-    color: { type: String, required: true },
   },
   { timestamps: true }
 );
 
-export const Certification = mongoose.model<ICertification>(
+export const CertificationModel = mongoose.model<ICertification>(
   "Certification",
   CertificationSchema
 );

@@ -1,23 +1,22 @@
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
-export interface IProject extends Document {
+export interface IEducation extends Document {
   userId: Schema.Types.ObjectId;
-  icon: string;
-  title: string;
-  description: string;
-  color: string;
+  degree: string;
+  institution: string;
+  major: string;
+  year: string;
 }
 
-const ProjectSchema = new Schema<IProject>(
+const educationSchema = new Schema<IEducation>(
   {
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    icon: { type: String, required: true },
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    color: { type: String, required: true },
+    degree: { type: String, required: true },
+    institution: { type: String, required: true },
+    major: { type: String, required: true },
+    year: { type: String, required: true },
   },
   { timestamps: true }
 );
 
-export const Project = mongoose.model<IProject>("Project", ProjectSchema);
+export const EducationModel = model<IEducation>("Education", educationSchema);

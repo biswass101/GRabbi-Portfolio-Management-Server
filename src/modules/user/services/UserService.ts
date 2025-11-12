@@ -1,6 +1,5 @@
 import { UserRepository } from "../repositories/UserRepository";
 import { IUser } from "../models/User.model";
-import bcrypt from "bcrypt";
 import ApiError from "../../../shared/utils/apiError";
 import httpStatus from "http-status";
 import { HashService } from "../../../core/utils/hash.service";

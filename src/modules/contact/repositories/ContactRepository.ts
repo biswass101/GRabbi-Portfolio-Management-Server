@@ -18,8 +18,8 @@ export class ContactRepository implements IRepository<IContact> {
     return await ContactModel.findByIdAndUpdate(id, data, { new: true });
   }
 
-  async delete(id: string): Promise<boolean> {
+  async delete(id: string): Promise<IContact | null> {
     const result = await ContactModel.findByIdAndDelete(id);
-    return !!result;
+    return result;
   }
 }
