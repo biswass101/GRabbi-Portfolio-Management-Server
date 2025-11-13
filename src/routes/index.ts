@@ -10,6 +10,7 @@ import { interestRoutes } from '../modules/interest/routes/interest.route';
 import { languageRoutes } from '../modules/language/routes/language.route';
 import { projectRoutes } from '../modules/project/routes/project.route';
 import { skillCategoryRoutes } from '../modules/skillCategory/routes/skillCategory.route';
+import { softSkillRoutes } from '../modules/softSkill/routes/softSkill.routes';
 const router = Router();
 
 router.use('/auth', authRoutes);
@@ -23,5 +24,6 @@ router.use('/interests', interestRoutes);
 router.use('/languages', languageRoutes);
 router.use('/projects', projectRoutes);
 router.use('/skillCategories', skillCategoryRoutes);
+router.use('/softSkills', softSkillRoutes);
 
 export default router;
