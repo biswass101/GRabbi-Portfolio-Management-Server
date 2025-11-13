@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { validateDTO } from "../../../shared/utils/validateDTO";
 import { ExperienceController } from "../controllers/ExperienceController";
-import { CreateExperienceDTO } from "../dtos/createExperienceDTO";
-import { UpdateExperienceDTO } from "../dtos/updateExperienceDTO";
+import { CreateExperienceDTO } from "../dtos/CreateExperienceDTO";
+import { UpdateExperienceDTO } from "../dtos/UpdateExperienceDTO";
 
 const router = Router();
 const experienceController = new ExperienceController();
