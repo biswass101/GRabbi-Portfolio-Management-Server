@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 export interface IContact extends Document {
   userId: Schema.Types.ObjectId;
-  type: string; // phone, email, linkedin, location
+  type: string;                        
   iconUrl?: string;
   detail: string;
   href?: string;
