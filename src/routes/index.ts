@@ -8,7 +8,8 @@ import { educationRoutes } from '../modules/education/routes/education.route';
 import { experienceRoutes } from '../modules/experience/routes/experience.route.ts';
 import { interestRoutes } from '../modules/interest/routes/interest.route';
 import { languageRoutes } from '../modules/language/routes/language.route';
-import { projectRoutes } from '../modules/project/routes/project.routes';
+import { projectRoutes } from '../modules/project/routes/project.route';
+import { skillCategoryRoutes } from '../modules/skillCategory/routes/skillCategory.route';
 const router = Router();
 
 router.use('/auth', authRoutes);
@@ -21,5 +22,6 @@ router.use('/experiences', experienceRoutes);
 router.use('/interests', interestRoutes);
 router.use('/languages', languageRoutes);
 router.use('/projects', projectRoutes);
+router.use('/skillCategories', skillCategoryRoutes);
 
 export default router;

@@ -5,7 +5,6 @@ export interface ISkillCategory extends Document {
   icon: string;
   title: string;
   skills: string[];
-  color: string;
 }
 
 const SkillCategorySchema = new Schema<ISkillCategory>(
@@ -14,7 +13,6 @@ const SkillCategorySchema = new Schema<ISkillCategory>(
     icon: { type: String, required: true },
     title: { type: String, required: true },
     skills: [{ type: String }],
-    color: { type: String, required: true },
   },
   { timestamps: true }
 );
