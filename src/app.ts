@@ -1,6 +1,7 @@
 import express, { Application } from "express";
 import cookieParser from "cookie-parser"; 
 import { connectDB } from "./config/db.config";
+import cors from 'cors';
 import routes from "./routes";
 import { globalErrorHanlder } from "./shared/middlewares/globalErrorHandler";
 import notFound from "./shared/middlewares/notFound";
@@ -18,6 +19,14 @@ export class App {
   }
 
   private config(): void {
+    this.app.use(
+  cors({
+    origin: "http://localhost:8080",   // your frontend URL
+    credentials: true,                 // allow cookies, auth headers
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
     this.app.use(express.json());
     this.app.use(cookieParser());
     this.app.use(express.urlencoded({extended: true}));

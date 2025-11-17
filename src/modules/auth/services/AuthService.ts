@@ -169,16 +169,18 @@ export class AuthService {
   }
 
   async logoutUser(token: string, userAgent: string) {
+    console.log("Token: ", token);
     const decoded = this.jwtService.verify(
       token,
       config.jwt.refreshSecret as string
     ) as JwtPayload;
     if (!decoded) throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid Token");
 
-    const user = await this.userRopo.findById(decoded.userId);
+
+    const user = await this.userRopo.findById(decoded.sub as string);
     if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found!");
 
-    await this.deleteRefreshTokens(token, userAgent);
+    await this.deleteRefreshTokens(user._id as string, userAgent);
 
     return { message: "User logged out successfully" };
   }
