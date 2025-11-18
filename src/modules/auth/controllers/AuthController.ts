@@ -61,9 +61,8 @@ export class AuthController {
 
   async refreshToken (req: Request, res: Response) {
     const result = await authService.refreshToken(req.cookies.refreshToken);
-    
     const { newRefreshToken, newAccessToken, userId } = result;
-    await authService.createRefreshToken(userId, newRefreshToken, req);
+    await authService.createRefreshToken(userId as string, newRefreshToken, req);
 
     res.cookie("refreshToken", newRefreshToken, {
       secure: config.app.env === "production",

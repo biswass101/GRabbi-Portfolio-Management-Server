@@ -99,15 +99,17 @@ export class AuthService {
         "Couldn't verify the token. Unauthorized User!"
       );
 
-    const { userId } = decoded;
-
+    const { sub } = decoded;
+      console.log(sub);
     const existingToken = await this.authRepo.getRefreshToken(
-      decoded.userId as string
+      decoded.sub as string
     );
+    
+    console.log(existingToken)
     if (!existingToken)
       throw new ApiError(httpStatus.UNAUTHORIZED, "Token expired or invalid!");
 
-    const user = await this.userRopo.findById(userId);
+    const user = await this.userRopo.findById(sub as string);
     if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found!");
 
     const jwtPayload = {
@@ -125,7 +127,7 @@ export class AuthService {
       secret: config.jwt.refreshSecret,
       expiresIn: config.jwt.refreshExpiresIn,
     });
-    return { newAccessToken, newRefreshToken, userId };
+    return { newAccessToken, newRefreshToken, userId: sub };
   }
 
   async forgetPassword(email: string) {
@@ -186,6 +188,7 @@ export class AuthService {
   }
 
   async createRefreshToken(userId: string, token: string, req: Request) {
+    console.log("hello")
     const tokenHash = await this.hashService.hash(token);
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const result1 = await this.deleteRefreshTokens(

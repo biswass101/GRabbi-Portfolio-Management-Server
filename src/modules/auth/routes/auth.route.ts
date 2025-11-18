@@ -29,6 +29,10 @@ router.post('/change-password',
     authController.changePassword.bind(authController)
 )
 
+router.post('/refresh-token', 
+    authController.refreshToken.bind(authController)
+);
+
 router.patch('/forget-password', 
     authController.forgetPassword.bind(authController)
 )

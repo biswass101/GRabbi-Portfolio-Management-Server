@@ -3,7 +3,7 @@ import { IRefreshToken, RefreshTokenModel } from "../models/refreshToken.model";
 export class AuthRepository {
 
   async getRefreshToken(id: string) {
-    return await RefreshTokenModel.findById({id})
+    return await RefreshTokenModel.findOne({userId: id})
   }
 
   async createRefreshToken(data: any) {
