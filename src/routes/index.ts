@@ -11,6 +11,7 @@ import { languageRoutes } from '../modules/language/routes/language.route';
 import { projectRoutes } from '../modules/project/routes/project.route';
 import { skillCategoryRoutes } from '../modules/skillCategory/routes/skillCategory.route';
 import { softSkillRoutes } from '../modules/softSkill/routes/softSkill.routes';
+import { fileRoutes } from '../modules/upload/routes/upload.route';
 const router = Router();
 
 router.use('/auth', authRoutes);
@@ -25,5 +26,6 @@ router.use('/languages', languageRoutes);
 router.use('/projects', projectRoutes);
 router.use('/skillCategories', skillCategoryRoutes);
 router.use('/softSkills', softSkillRoutes);
+router.use('/files', fileRoutes);
 
 export default router;

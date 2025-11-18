@@ -24,7 +24,6 @@ export class App {
     origin: "http://localhost:8080",   // your frontend URL
     credentials: true,                 // allow cookies, auth headers
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
     this.app.use(express.json());
