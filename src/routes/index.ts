@@ -12,6 +12,7 @@ import { projectRoutes } from '../modules/project/routes/project.route';
 import { skillCategoryRoutes } from '../modules/skillCategory/routes/skillCategory.route';
 import { softSkillRoutes } from '../modules/softSkill/routes/softSkill.routes';
 import { fileRoutes } from '../modules/upload/routes/upload.route';
+import { dashboardRoutes } from '../modules/dashboard/routes/dashborad.route';
 const router = Router();
 
 router.use('/auth', authRoutes);
@@ -27,5 +28,6 @@ router.use('/projects', projectRoutes);
 router.use('/skillCategories', skillCategoryRoutes);
 router.use('/softSkills', softSkillRoutes);
 router.use('/files', fileRoutes);
+router.use('/dashboard', dashboardRoutes)
 
 export default router;
