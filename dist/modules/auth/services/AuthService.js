@@ -153,7 +153,7 @@ class AuthService {
             const user = yield this.userRopo.findById(decoded.sub);
             if (!user)
                 throw new apiError_1.default(http_status_1.default.NOT_FOUND, "User Not Found!");
-            yield this.deleteRefreshTokens(user._id, userAgent);
+            yield this.deleteRefreshTokens(user._id.toString(), userAgent);
             return { message: "User logged out successfully" };
         });
     }

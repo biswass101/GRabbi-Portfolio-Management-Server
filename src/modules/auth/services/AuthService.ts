@@ -182,7 +182,7 @@ export class AuthService {
     const user = await this.userRopo.findById(decoded.sub as string);
     if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found!");
 
-    await this.deleteRefreshTokens(user._id as string, userAgent);
+    await this.deleteRefreshTokens(user._id.toString() as string, userAgent);
 
     return { message: "User logged out successfully" };
   }
