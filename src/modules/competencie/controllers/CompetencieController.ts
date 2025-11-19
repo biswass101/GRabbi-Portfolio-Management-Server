@@ -20,7 +20,7 @@ export class CompetencieController {
   }
 
   async getAll(req: Request, res: Response) {
-    const competencies = await competencieService.getAllCompetencies();
+    const competencies = await competencieService.getAllCompetencies(req.query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

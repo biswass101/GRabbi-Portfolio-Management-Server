@@ -10,7 +10,9 @@ export class CertificationService {
     return await this.certificationRepo.create(certification);
   }
 
-  async getAllCertifications(): Promise<ICertification[]> {
+  async getAllCertifications(query: {userId?: string}): Promise<ICertification[]> {
+    console.log(query);
+    if(query.userId) return await this.certificationRepo.findAllByUserId(query.userId);
     return await this.certificationRepo.findAll();
   }
 

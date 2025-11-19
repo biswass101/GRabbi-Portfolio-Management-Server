@@ -20,7 +20,7 @@ export class CertificationController {
   }
 
   async getAll(req: Request, res: Response) {
-    const certifications = await certificationService.getAllCertifications();
+    const certifications = await certificationService.getAllCertifications(req.query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
