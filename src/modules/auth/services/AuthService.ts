@@ -60,7 +60,7 @@ export class AuthService {
   }
 
   async changePassword(
-    userData: JwtPayload,
+    userData: any,
     payload: { oldPassword: string; newPassword: string }
   ) {
     const user = await this.userRopo.findById(userData.sub as string);
@@ -92,7 +92,7 @@ export class AuthService {
     const decoded = this.jwtService.verify(
       oldToken,
       config.jwt.refreshSecret as string
-    ) as JwtPayload;
+    ) as any;
     if (!decoded)
       throw new ApiError(
         httpStatus.UNAUTHORIZED,
@@ -161,7 +161,7 @@ export class AuthService {
     const decoded = this.jwtService.verify(
       token,
       config.jwt.resetSecret as string
-    ) as JwtPayload;
+    ) as any;
     if (payload.id !== decoded.sub)
     {
       throw new ApiError(httpStatus.FORBIDDEN, "Forbidden Access!");
@@ -175,7 +175,7 @@ export class AuthService {
     const decoded = this.jwtService.verify(
       token,
       config.jwt.refreshSecret as string
-    ) as JwtPayload;
+    ) as any;
     if (!decoded) throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid Token");
 
 

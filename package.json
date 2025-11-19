@@ -26,6 +26,8 @@
     "http-status": "^2.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.3",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
     "nodemailer": "^7.0.10",
     "reflect-metadata": "^0.2.2",
     "streamifier": "^0.1.1",
@@ -33,9 +35,7 @@
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3",
     "uuid": "^13.0.0",
-    "zod": "^4.1.12",
-    "multer": "^2.0.2",
-    "multer-storage-cloudinary": "^4.0.0"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",

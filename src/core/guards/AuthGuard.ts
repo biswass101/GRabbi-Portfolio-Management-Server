@@ -24,7 +24,7 @@ export class AuthGuard {
       const decoded = this.jwtService.verify(
         token,
         config.jwt.secret
-      ) as JwtPayload;
+      ) as any;
 
       if (!decoded)
         throw new ApiError(
@@ -43,7 +43,7 @@ export class AuthGuard {
         );
       console.log(user);
 
-      req.user = decoded as JwtPayload;
+      req.user = decoded as any;
 
       next();
     } catch (error: any) {
