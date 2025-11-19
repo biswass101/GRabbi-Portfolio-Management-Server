@@ -6,7 +6,6 @@ import {
   MinLength,
 } from "class-validator";
 
-
 export class UpdateUserDTO {
   @IsOptional()
   @IsNotEmpty({ message: "Name is required" })
@@ -25,7 +24,9 @@ export class UpdateUserDTO {
   @IsOptional({ message: "Image must be in string" })
   img: string;
 
+  @IsOptional({ message: "Designation must be in string" })
+  designation: string;
+
   @IsOptional({ message: "Summary must be in string" })
   summary: string;
-
 }

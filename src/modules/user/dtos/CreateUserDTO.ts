@@ -23,6 +23,9 @@ export class CreateUserDTO  {
   @IsOptional({ message: "Image must be in string"})
   img: string;
 
+  @IsOptional({ message: "Designation must be in string"})
+  designation: string;
+
   @IsOptional({message: "Summary must be in string"})
   summary: string;
   
