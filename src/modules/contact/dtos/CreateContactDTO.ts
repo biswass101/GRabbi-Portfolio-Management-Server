@@ -13,6 +13,7 @@ export class CreateContactDTO {
   @IsNotEmpty({ message: "Detail is required" })
   detail: string;
 
+  @IsOptional()
   @IsNotEmpty({ message: "Detail is required" })
   href: string;
 }

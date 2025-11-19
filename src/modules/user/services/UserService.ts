@@ -23,6 +23,8 @@ export class UserService {
   }
 
   async getUserById(id: string): Promise<IUser | null> {
+    const isExists = await this.userRepo.findById(id)
+    if(!isExists) throw new ApiError(httpStatus.NOT_FOUND, "User not found");
     return await this.userRepo.findById(id);
   }
 

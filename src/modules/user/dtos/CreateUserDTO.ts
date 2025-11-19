@@ -20,6 +20,12 @@ export class CreateUserDTO  {
     message: "Role must be admin",
   })
 
+  @IsOptional({ message: "Image must be in string"})
+  img: string;
+
+  @IsOptional({message: "Summary must be in string"})
+  summary: string;
+  
   @IsOptional()
   @IsNotEmpty({ message: "Role is required" })
   role: UserRole;
