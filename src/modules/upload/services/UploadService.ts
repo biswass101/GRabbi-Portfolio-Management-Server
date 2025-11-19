@@ -2,6 +2,7 @@ import cloudinary from "../../../config/cloudinary.config";
 import ApiError from "../../../shared/utils/apiError";
 import httpStatus from "http-status";
 import streamifier from "streamifier";
+import { Express } from "express";
 
 export class UploadService {
   async uploadImage(file: Express.Multer.File) {
