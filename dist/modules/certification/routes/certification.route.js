@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.certificationRoutes = void 0;
+const express_1 = require("express");
+const validateDTO_1 = require("../../../shared/utils/validateDTO");
+const CertificationController_1 = require("../controllers/CertificationController");
+const CreateCertificationDTO_1 = require("../dtos/CreateCertificationDTO");
+const UpdateCertificationDTO_1 = require("../dtos/UpdateCertificationDTO");
+const router = (0, express_1.Router)();
+exports.certificationRoutes = router;
+const certificationController = new CertificationController_1.CertificationController();
+router.get("/", certificationController.getAll.bind(certificationController));
+router.get("/:id", certificationController.getOne.bind(certificationController));
+router.post("/", (0, validateDTO_1.validateDTO)(CreateCertificationDTO_1.CreateCertificationDTO), certificationController.create.bind(certificationController));
+router.patch("/:id", (0, validateDTO_1.validateDTO)(UpdateCertificationDTO_1.UpdateCertificationDTO), certificationController.update.bind(certificationController));
+router.delete("/:id", certificationController.delete.bind(certificationController));

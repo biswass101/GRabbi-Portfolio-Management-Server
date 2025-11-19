@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.experienceRoutes = void 0;
+const express_1 = require("express");
+const validateDTO_1 = require("../../../shared/utils/validateDTO");
+const ExperienceController_1 = require("../controllers/ExperienceController");
+const CreateExperienceDTO_1 = require("../dtos/CreateExperienceDTO");
+const UpdateExperienceDTO_1 = require("../dtos/UpdateExperienceDTO");
+const router = (0, express_1.Router)();
+exports.experienceRoutes = router;
+const experienceController = new ExperienceController_1.ExperienceController();
+router.get("/", experienceController.getAll.bind(experienceController));
+router.get("/:id", experienceController.getOne.bind(experienceController));
+router.post("/", (0, validateDTO_1.validateDTO)(CreateExperienceDTO_1.CreateExperienceDTO), experienceController.create.bind(experienceController));
+router.patch("/:id", (0, validateDTO_1.validateDTO)(UpdateExperienceDTO_1.UpdateExperienceDTO), experienceController.update.bind(experienceController));
+router.delete("/:id", experienceController.delete.bind(experienceController));

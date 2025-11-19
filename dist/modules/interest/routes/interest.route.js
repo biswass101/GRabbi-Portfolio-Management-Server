@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.interestRoutes = void 0;
+const express_1 = require("express");
+const validateDTO_1 = require("../../../shared/utils/validateDTO");
+const InterestController_1 = require("../controllers/InterestController");
+const CreateInterestDTO_1 = require("../dtos/CreateInterestDTO");
+const UpdateInterestDTO_1 = require("../dtos/UpdateInterestDTO");
+const router = (0, express_1.Router)();
+exports.interestRoutes = router;
+const interestController = new InterestController_1.InterestController();
+router.get("/", interestController.getAll.bind(interestController));
+router.get("/:id", interestController.getOne.bind(interestController));
+router.post("/", (0, validateDTO_1.validateDTO)(CreateInterestDTO_1.CreateInterestDTO), interestController.create.bind(interestController));
+router.patch("/:id", (0, validateDTO_1.validateDTO)(UpdateInterestDTO_1.UpdateInterestDTO), interestController.update.bind(interestController));
+router.delete("/:id", interestController.delete.bind(interestController));

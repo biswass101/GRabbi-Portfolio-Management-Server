@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.projectRoutes = void 0;
+const express_1 = require("express");
+const validateDTO_1 = require("../../../shared/utils/validateDTO");
+const ProjectController_1 = require("../controllers/ProjectController");
+const CreateProjectDTO_1 = require("../dtos/CreateProjectDTO");
+const UpdateProjectDTO_1 = require("../dtos/UpdateProjectDTO");
+const router = (0, express_1.Router)();
+exports.projectRoutes = router;
+const projectController = new ProjectController_1.ProjectController();
+router.get("/", projectController.getAll.bind(projectController));
+router.get("/:id", projectController.getOne.bind(projectController));
+router.post("/", (0, validateDTO_1.validateDTO)(CreateProjectDTO_1.CreateProjectDTO), projectController.create.bind(projectController));
+router.patch("/:id", (0, validateDTO_1.validateDTO)(UpdateProjectDTO_1.UpdateProjectDTO), projectController.update.bind(projectController));
+router.delete("/:id", projectController.delete.bind(projectController));

@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.skillCategoryRoutes = void 0;
+const express_1 = require("express");
+const SkillCategoryController_1 = require("../controllers/SkillCategoryController");
+const validateDTO_1 = require("../../../shared/utils/validateDTO");
+const CreateSkillCategoryDTO_1 = require("../dtos/CreateSkillCategoryDTO");
+const UpdateSkillCategoryDTO_1 = require("../dtos/UpdateSkillCategoryDTO");
+const router = (0, express_1.Router)();
+exports.skillCategoryRoutes = router;
+const skillCategoryController = new SkillCategoryController_1.SkillCategoryController();
+router.get("/", skillCategoryController.getAll.bind(skillCategoryController));
+router.get("/:id", skillCategoryController.getOne.bind(skillCategoryController));
+router.post("/", (0, validateDTO_1.validateDTO)(CreateSkillCategoryDTO_1.CreateSkillCategoryDTO), skillCategoryController.create.bind(skillCategoryController));
+router.patch("/:id", (0, validateDTO_1.validateDTO)(UpdateSkillCategoryDTO_1.UpdateSkillCategoryDTO), skillCategoryController.update.bind(skillCategoryController));
+router.delete("/:id", skillCategoryController.delete.bind(skillCategoryController));

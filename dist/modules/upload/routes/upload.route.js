@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.fileRoutes = void 0;
+const express_1 = require("express");
+const UploadController_1 = require("../controllers/UploadController");
+const multer_1 = require("../../../shared/middlewares/multer");
+const router = (0, express_1.Router)();
+exports.fileRoutes = router;
+const uploadController = new UploadController_1.UploadController();
+router.post("/upload", multer_1.upload.single("image"), uploadController.uploadImage.bind(uploadController));
+router.delete("/delete", uploadController.deleteImage.bind(uploadController));

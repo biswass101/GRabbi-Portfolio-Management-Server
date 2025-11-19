@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.competencieRoutes = void 0;
+const express_1 = require("express");
+const validateDTO_1 = require("../../../shared/utils/validateDTO");
+const CompetencieController_1 = require("../controllers/CompetencieController");
+const CreateCompetencieDTO_1 = require("../dtos/CreateCompetencieDTO");
+const UpdateCompetencieDTO_1 = require("../dtos/UpdateCompetencieDTO");
+const router = (0, express_1.Router)();
+exports.competencieRoutes = router;
+const competencieController = new CompetencieController_1.CompetencieController();
+router.get("/", competencieController.getAll.bind(competencieController));
+router.get("/:id", competencieController.getOne.bind(competencieController));
+router.post("/", (0, validateDTO_1.validateDTO)(CreateCompetencieDTO_1.CreateCompetencieDTO), competencieController.create.bind(competencieController));
+router.patch("/:id", (0, validateDTO_1.validateDTO)(UpdateCompetencieDTO_1.UpdateCompetencieDTO), competencieController.update.bind(competencieController));
+router.delete("/:id", competencieController.delete.bind(competencieController));

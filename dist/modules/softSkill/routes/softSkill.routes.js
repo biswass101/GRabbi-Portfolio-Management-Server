@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.softSkillRoutes = void 0;
+const express_1 = require("express");
+const SoftSkillController_1 = require("../controllers/SoftSkillController");
+const validateDTO_1 = require("../../../shared/utils/validateDTO");
+const CreateSoftSkillDTO_1 = require("../dtos/CreateSoftSkillDTO");
+const UpdateSoftSkillDTO_1 = require("../dtos/UpdateSoftSkillDTO");
+const router = (0, express_1.Router)();
+exports.softSkillRoutes = router;
+const softSkillController = new SoftSkillController_1.SoftSkillController();
+router.get("/", softSkillController.getAll.bind(softSkillController));
+router.get("/:id", softSkillController.getOne.bind(softSkillController));
+router.post("/", (0, validateDTO_1.validateDTO)(CreateSoftSkillDTO_1.CreateSoftSkillDTO), softSkillController.create.bind(softSkillController));
+router.patch("/:id", (0, validateDTO_1.validateDTO)(UpdateSoftSkillDTO_1.UpdateSoftSkillDTO), softSkillController.update.bind(softSkillController));
+router.delete("/:id", softSkillController.delete.bind(softSkillController));

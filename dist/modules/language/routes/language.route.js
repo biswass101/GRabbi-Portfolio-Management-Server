@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.languageRoutes = void 0;
+const express_1 = require("express");
+const validateDTO_1 = require("../../../shared/utils/validateDTO");
+const LanguageController_1 = require("../controllers/LanguageController");
+const CreateLanguageDTO_1 = require("../dtos/CreateLanguageDTO");
+const UpdateLanguageDTO_1 = require("../dtos/UpdateLanguageDTO");
+const router = (0, express_1.Router)();
+exports.languageRoutes = router;
+const languageController = new LanguageController_1.LanguageController();
+router.get("/", languageController.getAll.bind(languageController));
+router.get("/:id", languageController.getOne.bind(languageController));
+router.post("/", (0, validateDTO_1.validateDTO)(CreateLanguageDTO_1.CreateLanguageDTO), languageController.create.bind(languageController));
+router.patch("/:id", (0, validateDTO_1.validateDTO)(UpdateLanguageDTO_1.UpdateLanguageDTO), languageController.update.bind(languageController));
+router.delete("/:id", languageController.delete.bind(languageController));

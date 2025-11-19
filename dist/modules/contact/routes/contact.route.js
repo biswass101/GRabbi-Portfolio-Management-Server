@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.contactRoutes = void 0;
+const express_1 = require("express");
+const validateDTO_1 = require("../../../shared/utils/validateDTO");
+const ContactController_1 = require("../controllers/ContactController");
+const CreateContactDTO_1 = require("../dtos/CreateContactDTO");
+const UpdateContactDTO_1 = require("../dtos/UpdateContactDTO");
+const router = (0, express_1.Router)();
+exports.contactRoutes = router;
+const contactController = new ContactController_1.ContactController();
+router.get("/", contactController.getAll.bind(contactController));
+router.get("/:id", contactController.getOne.bind(contactController));
+router.post("/", (0, validateDTO_1.validateDTO)(CreateContactDTO_1.CreateContactDTO), contactController.create.bind(contactController));
+router.patch("/:id", (0, validateDTO_1.validateDTO)(UpdateContactDTO_1.UpdateContactDTO), contactController.update.bind(contactController));
+router.delete("/:id", contactController.delete.bind(contactController));

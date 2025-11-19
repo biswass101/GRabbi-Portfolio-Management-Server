@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.educationRoutes = void 0;
+const express_1 = require("express");
+const validateDTO_1 = require("../../../shared/utils/validateDTO");
+const EducationController_1 = require("../controllers/EducationController");
+const createEducationDTO_1 = require("../dtos/createEducationDTO");
+const updateEducationDTO_1 = require("../dtos/updateEducationDTO");
+const router = (0, express_1.Router)();
+exports.educationRoutes = router;
+const educationController = new EducationController_1.EducationController();
+router.get("/", educationController.getAll.bind(educationController));
+router.get("/:id", educationController.getOne.bind(educationController));
+router.post("/", (0, validateDTO_1.validateDTO)(createEducationDTO_1.CreateEducationtDTO), educationController.create.bind(educationController));
+router.patch("/:id", (0, validateDTO_1.validateDTO)(updateEducationDTO_1.UpdateEducationDTO), educationController.update.bind(educationController));
+router.delete("/:id", educationController.delete.bind(educationController));
