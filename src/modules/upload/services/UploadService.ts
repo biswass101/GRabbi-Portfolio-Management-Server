@@ -2,10 +2,9 @@ import cloudinary from "../../../config/cloudinary.config";
 import ApiError from "../../../shared/utils/apiError";
 import httpStatus from "http-status";
 import streamifier from "streamifier";
-import { Express } from "express";
 
 export class UploadService {
-  async uploadImage(file: Express.Multer.File) {
+  async uploadImage(file: any) {
     return new Promise((resolve, reject) => {
       if (!file) {
         return reject(new ApiError(httpStatus.BAD_REQUEST, "No file uploaded"));
