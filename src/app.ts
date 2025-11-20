@@ -1,11 +1,10 @@
 import express, { Application } from "express";
-import cookieParser from "cookie-parser"; 
+import cookieParser from "cookie-parser";
 import { connectDB } from "./config/db.config";
-import cors from 'cors';
+import cors from "cors";
 import routes from "./routes";
 import { globalErrorHanlder } from "./shared/middlewares/globalErrorHandler";
 import notFound from "./shared/middlewares/notFound";
-
 
 export class App {
   public app: Application;
@@ -20,20 +19,19 @@ export class App {
 
   private config(): void {
     this.app.use(
-  cors({
-    origin: "http://localhost:8080",   // your frontend URL
-    credentials: true,                 // allow cookies, auth headers
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  })
-);
+      cors({
+        origin: ["http://localhost:8080", "https://manage-grabbi.onrender.com"],
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+      })
+    );
     this.app.use(express.json());
     this.app.use(cookieParser());
-    this.app.use(express.urlencoded({extended: true}));
+    this.app.use(express.urlencoded({ extended: true }));
   }
 
   private routes(): void {
     this.app.use("/api/v1", routes);
-    
   }
 
   private middlewares(): void {
