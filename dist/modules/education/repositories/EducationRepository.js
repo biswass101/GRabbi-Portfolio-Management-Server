@@ -22,6 +22,11 @@ class EducationRepository {
             return yield Education_model_1.EducationModel.find();
         });
     }
+    findAllByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Education_model_1.EducationModel.find({ userId });
+        });
+    }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield Education_model_1.EducationModel.findById(id);

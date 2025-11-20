@@ -8,7 +8,9 @@ export class InterestService {
     return await this.interestRepo.create(interest);
   }
 
-  async getAllInterests(): Promise<IInterest[]> {
+  async getAllInterests(query: { userId?: string }): Promise<IInterest[]> {
+    if (query.userId)
+      return await this.interestRepo.findAllByUserId(query.userId);
     return await this.interestRepo.findAll();
   }
 
@@ -16,7 +18,10 @@ export class InterestService {
     return await this.interestRepo.findById(id);
   }
 
-  async updateInterest(id: string, data: Partial<IInterest>): Promise<IInterest | null> {
+  async updateInterest(
+    id: string,
+    data: Partial<IInterest>
+  ): Promise<IInterest | null> {
     return await this.interestRepo.update(id, data);
   }
 

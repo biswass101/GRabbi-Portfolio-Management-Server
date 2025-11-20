@@ -19,8 +19,10 @@ class ExperienceService {
             return yield this.experienceRepo.create(experience);
         });
     }
-    getAllExperiences() {
+    getAllExperiences(query) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (query.userId)
+                return yield this.experienceRepo.findAllByUserId(query.userId);
             return yield this.experienceRepo.findAll();
         });
     }

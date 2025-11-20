@@ -40,6 +40,7 @@ const UserSchema = new mongoose_1.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     img: { type: String, default: "" },
+    designation: { type: String, default: "" },
     summary: { type: String, default: "" },
     role: { type: String, default: "admin" },
 }, { timestamps: true });

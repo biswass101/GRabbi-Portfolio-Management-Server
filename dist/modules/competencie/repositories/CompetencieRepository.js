@@ -22,6 +22,11 @@ class CompetencieRepository {
             return yield Competencie_model_1.CompetencieModel.find();
         });
     }
+    findAllByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Competencie_model_1.CompetencieModel.find({ userId });
+        });
+    }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield Competencie_model_1.CompetencieModel.findById(id);

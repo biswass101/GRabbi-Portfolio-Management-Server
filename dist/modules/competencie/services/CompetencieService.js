@@ -19,8 +19,10 @@ class CompetencieService {
             return yield this.competencieRepo.create(competencie);
         });
     }
-    getAllCompetencies() {
+    getAllCompetencies(query) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (query.userId)
+                return yield this.competencieRepo.findAllByUserId(query.userId);
             return yield this.competencieRepo.findAll();
         });
     }

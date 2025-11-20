@@ -19,7 +19,7 @@ export class SkillCategoryController {
   }
 
   async getAll(req: Request, res: Response) {
-    const result = await skillCategoryService.getAllSkillCategories();
+    const result = await skillCategoryService.getAllSkillCategories(req.query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

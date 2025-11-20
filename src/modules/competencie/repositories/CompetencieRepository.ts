@@ -11,7 +11,6 @@ export class CompetencieRepository implements IRepository<ICompetencie> {
   }
 
   async findAllByUserId(userId: string): Promise<ICompetencie[]> {
-    console.log("kjs", userId)
     return await CompetencieModel.find({ userId });
   }
 

@@ -20,7 +20,7 @@ export class ContactController {
   }
 
   async getAll(req: Request, res: Response) {
-    const contacts = await contactService.getAllContacts();
+    const contacts = await contactService.getAllContacts(req.query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

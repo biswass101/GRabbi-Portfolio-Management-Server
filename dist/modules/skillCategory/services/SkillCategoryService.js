@@ -19,8 +19,10 @@ class SkillCategoryService {
             return yield this.skillCategoryRepo.create(data);
         });
     }
-    getAllSkillCategories() {
+    getAllSkillCategories(query) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (query.userId)
+                return yield this.skillCategoryRepo.findAllByUserId(query.userId);
             return yield this.skillCategoryRepo.findAll();
         });
     }

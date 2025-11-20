@@ -22,6 +22,11 @@ class LanguageRepository {
             return yield Language_model_1.LanguageModel.find();
         });
     }
+    findAllByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Language_model_1.LanguageModel.find({ userId });
+        });
+    }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield Language_model_1.LanguageModel.findById(id);

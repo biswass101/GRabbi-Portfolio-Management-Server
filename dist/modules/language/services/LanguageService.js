@@ -19,8 +19,10 @@ class LanguageService {
             return yield this.languageRepo.create(language);
         });
     }
-    getAllLanguages() {
+    getAllLanguages(query) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (query.userId)
+                return yield this.languageRepo.findAllByUserId(query.userId);
             return yield this.languageRepo.findAll();
         });
     }

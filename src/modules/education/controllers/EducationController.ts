@@ -20,7 +20,7 @@ export class EducationController {
   }
 
   async getAll(req: Request, res: Response) {
-    const educations = await educationService.getAllEducations();
+    const educations = await educationService.getAllEducations(req.query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

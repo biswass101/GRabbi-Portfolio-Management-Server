@@ -22,6 +22,11 @@ class SoftSkillRepository {
             return yield SoftSkill_model_1.SoftSkillModel.find();
         });
     }
+    findAllByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield SoftSkill_model_1.SoftSkillModel.find({ userId });
+        });
+    }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield SoftSkill_model_1.SoftSkillModel.findById(id);

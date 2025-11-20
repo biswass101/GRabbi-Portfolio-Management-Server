@@ -19,7 +19,7 @@ export class InterestController {
   }
 
   async getAll(req: Request, res: Response) {
-    const interests = await interestService.getAllInterests();
+    const interests = await interestService.getAllInterests(req.query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

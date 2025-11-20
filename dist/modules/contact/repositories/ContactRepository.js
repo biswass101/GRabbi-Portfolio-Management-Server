@@ -22,6 +22,11 @@ class ContactRepository {
             return yield Contact_model_1.ContactModel.find();
         });
     }
+    findAllByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Contact_model_1.ContactModel.find({ userId });
+        });
+    }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield Contact_model_1.ContactModel.findById(id);

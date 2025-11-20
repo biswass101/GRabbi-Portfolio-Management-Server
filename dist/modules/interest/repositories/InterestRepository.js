@@ -22,6 +22,11 @@ class InterestRepository {
             return yield Interest_model_1.InterestModel.find();
         });
     }
+    findAllByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Interest_model_1.InterestModel.find({ userId });
+        });
+    }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield Interest_model_1.InterestModel.findById(id);

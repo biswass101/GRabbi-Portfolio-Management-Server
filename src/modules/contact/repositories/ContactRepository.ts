@@ -10,6 +10,10 @@ export class ContactRepository implements IRepository<IContact> {
     return await ContactModel.find();
   }
 
+  async findAllByUserId(userId: string): Promise<IContact[]> {
+    return await ContactModel.find({ userId });
+  }
+
   async findById(id: string): Promise<IContact | null> {
     return await ContactModel.findById(id);
   }

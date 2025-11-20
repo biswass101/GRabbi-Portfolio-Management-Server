@@ -10,6 +10,10 @@ export class LanguageRepository implements IRepository<ILanguage> {
     return await LanguageModel.find();
   }
 
+    async findAllByUserId(userId: string): Promise<ILanguage[]> {
+      return await LanguageModel.find({ userId });
+    }
+
   async findById(id: string): Promise<ILanguage | null> {
     return await LanguageModel.findById(id);
   }

@@ -19,8 +19,10 @@ class ProjectService {
             return yield this.projectRepo.create(project);
         });
     }
-    getAllProjects() {
+    getAllProjects(query) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (query.userId)
+                return yield this.projectRepo.findAllByUserId(query.userId);
             return yield this.projectRepo.findAll();
         });
     }
