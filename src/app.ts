@@ -20,7 +20,7 @@ export class App {
   private config(): void {
     this.app.use(
       cors({
-        origin: ["http://localhost:8080", "https://manage-grabbi.vercel.app", https://grabbi.vercel.app],
+        origin: ["http://localhost:8080", "https://manage-grabbi.vercel.app", "https://grabbi.vercel.app"],
         credentials: true,
         methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
       })
