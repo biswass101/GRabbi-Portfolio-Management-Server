@@ -10,7 +10,8 @@ export class EducationService {
     return await this.educationRepo.create(education);
   }
 
-  async getAllEducations(): Promise<IEducation[]> {
+  async getAllEducations(query: {userId?: string}): Promise<IEducation[]> {
+    if(query.userId) return await this.educationRepo.findAllByUserId(query.userId)
     return await this.educationRepo.findAll();
   }
 

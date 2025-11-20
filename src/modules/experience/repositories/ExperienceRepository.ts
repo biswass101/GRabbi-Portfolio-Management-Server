@@ -10,6 +10,10 @@ export class ExperienceRepository implements IRepository<IExperience> {
     return await Experience.find();
   }
 
+    async findAllByUserId(userId: string): Promise<IExperience[]> {
+      return await Experience.find({ userId });
+    }
+
   async findById(id: string): Promise<IExperience | null> {
     return await Experience.findById(id);
   }

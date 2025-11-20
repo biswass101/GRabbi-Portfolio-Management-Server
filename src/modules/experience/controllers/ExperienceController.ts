@@ -19,7 +19,7 @@ export class ExperienceController {
   }
 
   async getAll(req: Request, res: Response) {
-    const experiences = await experienceService.getAllExperiences();
+    const experiences = await experienceService.getAllExperiences(req.query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

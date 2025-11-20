@@ -11,6 +11,10 @@ export class CertificationRepository implements IRepository<ICertification> {
     return await CertificationModel.find();
   }
 
+  async findAllByUserId(userId: string): Promise<ICertification[]> {
+    return await CertificationModel.find({userId});
+  }
+
   async findById(id: string): Promise<ICertification | null> {
     return await CertificationModel.findById(id);
   }

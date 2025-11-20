@@ -19,7 +19,7 @@ export class SoftSkillController {
   }
 
   async getAll(req: Request, res: Response) {
-    const result = await softSkillService.getAllSoftSkills();
+    const result = await softSkillService.getAllSoftSkills(req.query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

@@ -1,5 +1,8 @@
 import { IRepository } from "../../../core/repositories/BaseRepository";
-import { ISkillCategory, SkillCategoryModel } from "../models/SkillCategory.model";
+import {
+  ISkillCategory,
+  SkillCategoryModel,
+} from "../models/SkillCategory.model";
 
 export class SkillCategoryRepository implements IRepository<ISkillCategory> {
   async create(skillCategory: ISkillCategory): Promise<ISkillCategory> {
@@ -10,11 +13,18 @@ export class SkillCategoryRepository implements IRepository<ISkillCategory> {
     return await SkillCategoryModel.find();
   }
 
+  async findAllByUserId(userId: string): Promise<ISkillCategory[]> {
+    return await SkillCategoryModel.find({ userId });
+  }
+
   async findById(id: string): Promise<ISkillCategory | null> {
     return await SkillCategoryModel.findById(id);
   }
 
-  async update(id: string, data: Partial<ISkillCategory>): Promise<ISkillCategory | null> {
+  async update(
+    id: string,
+    data: Partial<ISkillCategory>
+  ): Promise<ISkillCategory | null> {
     return await SkillCategoryModel.findByIdAndUpdate(id, data, { new: true });
   }
 

@@ -22,6 +22,11 @@ class SkillCategoryRepository {
             return yield SkillCategory_model_1.SkillCategoryModel.find();
         });
     }
+    findAllByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield SkillCategory_model_1.SkillCategoryModel.find({ userId });
+        });
+    }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield SkillCategory_model_1.SkillCategoryModel.findById(id);

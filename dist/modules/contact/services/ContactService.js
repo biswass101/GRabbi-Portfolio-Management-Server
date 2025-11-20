@@ -19,8 +19,10 @@ class ContactService {
             return yield this.contactRepo.create(contact);
         });
     }
-    getAllContacts() {
+    getAllContacts(query) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (query.userId)
+                return yield this.contactRepo.findAllByUserId(query.userId);
             return yield this.contactRepo.findAll();
         });
     }

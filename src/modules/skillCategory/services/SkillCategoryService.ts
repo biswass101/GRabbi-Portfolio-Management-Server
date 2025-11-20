@@ -8,7 +8,12 @@ export class SkillCategoryService {
     return await this.skillCategoryRepo.create(data);
   }
 
-  async getAllSkillCategories(): Promise<ISkillCategory[]> {
+  async getAllSkillCategories(query: {
+    userId?: string;
+  }): Promise<ISkillCategory[]> {
+    if (query.userId)
+      return await this.skillCategoryRepo.findAllByUserId(query.userId);
+
     return await this.skillCategoryRepo.findAll();
   }
 
@@ -16,7 +21,10 @@ export class SkillCategoryService {
     return await this.skillCategoryRepo.findById(id);
   }
 
-  async updateSkillCategory(id: string, data: Partial<ISkillCategory>): Promise<ISkillCategory | null> {
+  async updateSkillCategory(
+    id: string,
+    data: Partial<ISkillCategory>
+  ): Promise<ISkillCategory | null> {
     return await this.skillCategoryRepo.update(id, data);
   }
 

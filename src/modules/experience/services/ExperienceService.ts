@@ -8,7 +8,8 @@ export class ExperienceService {
     return await this.experienceRepo.create(experience);
   }
 
-  async getAllExperiences(): Promise<IExperience[]> {
+  async getAllExperiences(query: {userId?: string}): Promise<IExperience[]> {
+    if(query.userId) return await this.experienceRepo.findAllByUserId(query.userId)
     return await this.experienceRepo.findAll();
   }
 

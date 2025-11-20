@@ -10,11 +10,18 @@ export class EducationRepository implements IRepository<IEducation> {
     return await EducationModel.find();
   }
 
+  async findAllByUserId(userId: string): Promise<IEducation[]> {
+    return await EducationModel.find({ userId });
+  }
+
   async findById(id: string): Promise<IEducation | null> {
     return await EducationModel.findById(id);
   }
 
-  async update(id: string, data: Partial<IEducation>): Promise<IEducation | null> {
+  async update(
+    id: string,
+    data: Partial<IEducation>
+  ): Promise<IEducation | null> {
     return await EducationModel.findByIdAndUpdate(id, data, { new: true });
   }
 

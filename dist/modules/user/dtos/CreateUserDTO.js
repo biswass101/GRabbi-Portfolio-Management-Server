@@ -40,6 +40,10 @@ __decorate([
     __metadata("design:type", String)
 ], CreateUserDTO.prototype, "img", void 0);
 __decorate([
+    (0, class_validator_1.IsOptional)({ message: "Designation must be in string" }),
+    __metadata("design:type", String)
+], CreateUserDTO.prototype, "designation", void 0);
+__decorate([
     (0, class_validator_1.IsOptional)({ message: "Summary must be in string" }),
     __metadata("design:type", String)
 ], CreateUserDTO.prototype, "summary", void 0);

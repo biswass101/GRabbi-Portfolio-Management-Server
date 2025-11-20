@@ -19,8 +19,10 @@ class EducationService {
             return yield this.educationRepo.create(education);
         });
     }
-    getAllEducations() {
+    getAllEducations(query) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (query.userId)
+                return yield this.educationRepo.findAllByUserId(query.userId);
             return yield this.educationRepo.findAll();
         });
     }

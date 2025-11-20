@@ -19,8 +19,10 @@ class InterestService {
             return yield this.interestRepo.create(interest);
         });
     }
-    getAllInterests() {
+    getAllInterests(query) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (query.userId)
+                return yield this.interestRepo.findAllByUserId(query.userId);
             return yield this.interestRepo.findAll();
         });
     }

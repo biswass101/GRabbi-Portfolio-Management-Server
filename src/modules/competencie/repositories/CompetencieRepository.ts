@@ -1,4 +1,3 @@
-
 import { IRepository } from "../../../core/repositories/BaseRepository";
 import { CompetencieModel, ICompetencie } from "../models/Competencie.model";
 
@@ -11,11 +10,18 @@ export class CompetencieRepository implements IRepository<ICompetencie> {
     return await CompetencieModel.find();
   }
 
+  async findAllByUserId(userId: string): Promise<ICompetencie[]> {
+    return await CompetencieModel.find({ userId });
+  }
+
   async findById(id: string): Promise<ICompetencie | null> {
     return await CompetencieModel.findById(id);
   }
 
-  async update(id: string, data: Partial<ICompetencie>): Promise<ICompetencie | null> {
+  async update(
+    id: string,
+    data: Partial<ICompetencie>
+  ): Promise<ICompetencie | null> {
     return await CompetencieModel.findByIdAndUpdate(id, data, { new: true });
   }
 

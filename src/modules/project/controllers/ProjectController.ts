@@ -19,7 +19,7 @@ export class ProjectController {
   }
 
   async getAll(req: Request, res: Response) {
-    const projects = await projectService.getAllProjects();
+    const projects = await projectService.getAllProjects(req.query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

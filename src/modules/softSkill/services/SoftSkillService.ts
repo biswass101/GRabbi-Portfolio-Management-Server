@@ -8,7 +8,10 @@ export class SoftSkillService {
     return await this.softSkillRepo.create(data);
   }
 
-  async getAllSoftSkills(): Promise<ISoftSkill[]> {
+  async getAllSoftSkills(query: { userId?: string }): Promise<ISoftSkill[]> {
+    if (query.userId)
+      return await this.softSkillRepo.findAllByUserId(query.userId);
+
     return await this.softSkillRepo.findAll();
   }
 
@@ -16,7 +19,10 @@ export class SoftSkillService {
     return await this.softSkillRepo.findById(id);
   }
 
-  async updateSoftSkill(id: string, data: Partial<ISoftSkill>): Promise<ISoftSkill | null> {
+  async updateSoftSkill(
+    id: string,
+    data: Partial<ISoftSkill>
+  ): Promise<ISoftSkill | null> {
     return await this.softSkillRepo.update(id, data);
   }
 

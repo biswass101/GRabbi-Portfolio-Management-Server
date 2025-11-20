@@ -8,7 +8,10 @@ export class LanguageService {
     return await this.languageRepo.create(language);
   }
 
-  async getAllLanguages(): Promise<ILanguage[]> {
+  async getAllLanguages(query: { userId?: string }): Promise<ILanguage[]> {
+    if (query.userId)
+      return await this.languageRepo.findAllByUserId(query.userId);
+
     return await this.languageRepo.findAll();
   }
 
@@ -16,7 +19,10 @@ export class LanguageService {
     return await this.languageRepo.findById(id);
   }
 
-  async updateLanguage(id: string, data: Partial<ILanguage>): Promise<ILanguage | null> {
+  async updateLanguage(
+    id: string,
+    data: Partial<ILanguage>
+  ): Promise<ILanguage | null> {
     return await this.languageRepo.update(id, data);
   }
 

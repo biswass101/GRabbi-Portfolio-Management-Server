@@ -19,8 +19,10 @@ class SoftSkillService {
             return yield this.softSkillRepo.create(data);
         });
     }
-    getAllSoftSkills() {
+    getAllSoftSkills(query) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (query.userId)
+                return yield this.softSkillRepo.findAllByUserId(query.userId);
             return yield this.softSkillRepo.findAll();
         });
     }

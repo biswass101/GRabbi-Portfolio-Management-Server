@@ -19,7 +19,7 @@ export class LanguageController {
   }
 
   async getAll(req: Request, res: Response) {
-    const languages = await languageService.getAllLanguages();
+    const languages = await languageService.getAllLanguages(req.query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,

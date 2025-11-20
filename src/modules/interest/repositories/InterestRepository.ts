@@ -10,6 +10,10 @@ export class InterestRepository implements IRepository<IInterest> {
     return await InterestModel.find();
   }
 
+    async findAllByUserId(userId: string): Promise<IInterest[]> {
+      return await InterestModel.find({ userId });
+    }
+
   async findById(id: string): Promise<IInterest | null> {
     return await InterestModel.findById(id);
   }

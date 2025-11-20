@@ -33,7 +33,7 @@ class CompetencieController {
     }
     getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const competencies = yield exports.competencieService.getAllCompetencies();
+            const competencies = yield exports.competencieService.getAllCompetencies(req.query);
             (0, sendResponse_1.default)(res, {
                 statusCode: http_status_1.default.OK,
                 success: true,

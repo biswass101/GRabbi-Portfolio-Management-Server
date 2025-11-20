@@ -22,6 +22,11 @@ class ExperienceRepository {
             return yield Experience_model_1.Experience.find();
         });
     }
+    findAllByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Experience_model_1.Experience.find({ userId });
+        });
+    }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield Experience_model_1.Experience.findById(id);

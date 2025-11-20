@@ -33,7 +33,7 @@ class ProjectController {
     }
     getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const projects = yield exports.projectService.getAllProjects();
+            const projects = yield exports.projectService.getAllProjects(req.query);
             (0, sendResponse_1.default)(res, {
                 statusCode: http_status_1.default.OK,
                 success: true,

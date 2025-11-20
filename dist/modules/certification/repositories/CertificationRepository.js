@@ -22,6 +22,11 @@ class CertificationRepository {
             return yield Certification_model_1.CertificationModel.find();
         });
     }
+    findAllByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Certification_model_1.CertificationModel.find({ userId });
+        });
+    }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield Certification_model_1.CertificationModel.findById(id);

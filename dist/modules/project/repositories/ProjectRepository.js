@@ -22,6 +22,11 @@ class ProjectRepository {
             return yield Project_model_1.Project.find();
         });
     }
+    findAllByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Project_model_1.Project.find({ userId });
+        });
+    }
     findById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield Project_model_1.Project.findById(id);

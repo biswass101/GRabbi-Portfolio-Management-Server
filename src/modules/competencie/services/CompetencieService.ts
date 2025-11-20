@@ -10,7 +10,8 @@ export class CompetencieService {
     return await this.competencieRepo.create(competencie);
   }
 
-  async getAllCompetencies(): Promise<ICompetencie[]> {
+  async getAllCompetencies(query: {userId?: string}): Promise<ICompetencie[]> {
+    if(query.userId) return await this.competencieRepo.findAllByUserId(query.userId)
     return await this.competencieRepo.findAll();
   }
 

@@ -10,6 +10,10 @@ export class ProjectRepository implements IRepository<IProject> {
     return await Project.find();
   }
 
+  async findAllByUserId(userId: string): Promise<IProject[]> {
+    return await Project.find({ userId });
+  }
+
   async findById(id: string): Promise<IProject | null> {
     return await Project.findById(id);
   }

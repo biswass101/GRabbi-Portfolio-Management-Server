@@ -8,7 +8,10 @@ export class ProjectService {
     return await this.projectRepo.create(project);
   }
 
-  async getAllProjects(): Promise<IProject[]> {
+  async getAllProjects(query: { userId?: string }): Promise<IProject[]> {
+    if (query.userId)
+      return await this.projectRepo.findAllByUserId(query.userId);
+
     return await this.projectRepo.findAll();
   }
 
@@ -16,7 +19,10 @@ export class ProjectService {
     return await this.projectRepo.findById(id);
   }
 
-  async updateProject(id: string, data: Partial<IProject>): Promise<IProject | null> {
+  async updateProject(
+    id: string,
+    data: Partial<IProject>
+  ): Promise<IProject | null> {
     return await this.projectRepo.update(id, data);
   }
 
