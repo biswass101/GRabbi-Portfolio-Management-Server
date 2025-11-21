@@ -43,8 +43,8 @@ export class AuthController {
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? "none" : "lax",
+      secure: true,
+      sameSite: "none",
       maxAge: 1000 * 60 * 60 * 24 * 30,
       path: "/",
     });
@@ -77,7 +77,7 @@ export class AuthController {
     );
     console.log(config.app.env);
     res.cookie("refreshToken", newRefreshToken, {
-      secure: config.app.env === "production",
+      secure: true,
       httpOnly: true,
       sameSite: "none",
       maxAge: 1000 * 60 * 60 * 24 * 30,
@@ -121,7 +121,7 @@ export class AuthController {
     console.log(config.app.env);
 
     res.clearCookie("refreshToken", {
-      secure: config.app.env === "production",
+      secure: true,
       httpOnly: true,
       sameSite: "none",
       path: "/",
