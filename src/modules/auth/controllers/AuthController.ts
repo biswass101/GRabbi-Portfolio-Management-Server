@@ -6,7 +6,7 @@ import { AuthService } from "../services/AuthService";
 import { JwtService } from "../../../core/utils/jwt";
 import { config } from "../../../config/env.config";
 import sendResponse from "../../../shared/utils/sendResponse";
-import httpStatus from 'http-status'
+import httpStatus from "http-status";
 import { AuthRepository } from "../repositories/AuthRepository";
 
 const userRepo = new UserRepository();
@@ -16,7 +16,12 @@ const jwtService = new JwtService({
   secret: "jwt-secret-portf",
   expiresIn: "1d",
 });
-const authService = new AuthService(userRepo, authRepo, hashService, jwtService);
+const authService = new AuthService(
+  userRepo,
+  authRepo,
+  hashService,
+  jwtService
+);
 const userController = new UserController();
 
 export class AuthController {
@@ -28,10 +33,12 @@ export class AuthController {
     const user = await authService.signinUser(req.body);
     const { accessToken, refreshToken, isUserExists } = user;
     const isProduction = config.app.env === "production";
+    console.log("Env: ", isProduction);
 
     const tokenResult = await authService.createRefreshToken(
-        isUserExists._id?.toString() as string, 
-        refreshToken, req
+      isUserExists._id?.toString() as string,
+      refreshToken,
+      req
     );
 
     res.cookie("refreshToken", refreshToken, {
@@ -39,13 +46,14 @@ export class AuthController {
       secure: isProduction,
       sameSite: isProduction ? "none" : "lax",
       maxAge: 1000 * 60 * 60 * 24 * 30,
+      path: "/",
     });
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: "Loign Successfully",
-      data: { accessToken,  userId: isUserExists._id?.toString() as string }
+      data: { accessToken, userId: isUserExists._id?.toString() as string },
     });
   }
 
@@ -59,16 +67,21 @@ export class AuthController {
     });
   }
 
-  async refreshToken (req: Request, res: Response) {
+  async refreshToken(req: Request, res: Response) {
     const result = await authService.refreshToken(req.cookies.refreshToken);
     const { newRefreshToken, newAccessToken, userId } = result;
-    await authService.createRefreshToken(userId as string, newRefreshToken, req);
-
+    await authService.createRefreshToken(
+      userId as string,
+      newRefreshToken,
+      req
+    );
+    console.log(config.app.env);
     res.cookie("refreshToken", newRefreshToken, {
       secure: config.app.env === "production",
       httpOnly: true,
       sameSite: "none",
       maxAge: 1000 * 60 * 60 * 24 * 30,
+      path: "/",
     });
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -78,7 +91,7 @@ export class AuthController {
     });
   }
 
-  async forgetPassword (req: Request, res: Response) {
+  async forgetPassword(req: Request, res: Response) {
     const result = await authService.forgetPassword(req.body.email);
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -88,7 +101,7 @@ export class AuthController {
     });
   }
 
- async resetPassword (req: Request, res: Response) {
+  async resetPassword(req: Request, res: Response) {
     const token = req.headers.authorization as string;
     const result = await authService.resetPassword(req.body, token);
     sendResponse(res, {
@@ -99,13 +112,19 @@ export class AuthController {
     });
   }
 
-   async logoutUser (req: Request, res: Response) {
+  async logoutUser(req: Request, res: Response) {
     const { refreshToken } = req.cookies;
-    await authService.logoutUser(refreshToken, req.headers["user-agent"] as string);
+    await authService.logoutUser(
+      refreshToken,
+      req.headers["user-agent"] as string
+    );
+    console.log(config.app.env);
+
     res.clearCookie("refreshToken", {
       secure: config.app.env === "production",
       httpOnly: true,
       sameSite: "none",
+      path: "/",
     });
     sendResponse(res, {
       statusCode: httpStatus.OK,
