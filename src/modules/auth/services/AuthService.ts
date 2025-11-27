@@ -148,7 +148,9 @@ export class AuthService {
 
     const resetUILink = `${config.clientSite.reset_pass_ui_link}?id=${user?._id}&token=${resetPassToken}`;
     const resetUI = createEmailHtml(user?.name, resetUILink);
-    console.log(await sendEmail(user?.email, "Reset your password", resetUI));
+    const result = await sendEmailResend(user?.email, "Reset your password", resetUI);
+    console.log(result);
+    return result;
   }
 
   async resetPassword(
