@@ -33,7 +33,6 @@ export class AuthController {
     const user = await authService.signinUser(req.body);
     const { accessToken, refreshToken, isUserExists } = user;
     const isProduction = config.app.env === "production";
-    console.log("Env: ", isProduction);
 
     const tokenResult = await authService.createRefreshToken(
       isUserExists._id?.toString() as string,
@@ -118,7 +117,6 @@ export class AuthController {
       refreshToken,
       req.headers["user-agent"] as string
     );
-    console.log(config.app.env);
 
     res.clearCookie("refreshToken", {
       secure: true,

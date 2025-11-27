@@ -157,6 +157,7 @@ export class AuthService {
     payload: { id: string; newPassword: string },
     token: string
   ) {
+    console.log(payload, token);  
     const user = await this.userRopo.findById(payload.id);
     if (!user) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found!");
 
@@ -173,7 +174,6 @@ export class AuthService {
   }
 
   async logoutUser(token: string, userAgent: string) {
-    console.log("Token: ", token);
     const decoded = this.jwtService.verify(
       token,
       config.jwt.refreshSecret as string

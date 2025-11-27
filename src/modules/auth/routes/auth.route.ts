@@ -23,7 +23,7 @@ router.post('/signup',
     authController.signupUser.bind(authController)
 );
 
-router.post('/change-password', 
+router.patch('/change-password', 
     validateDTO(ChangeUserPasswordDTO),
     authGuard.handle.bind(authGuard),
     authController.changePassword.bind(authController)
