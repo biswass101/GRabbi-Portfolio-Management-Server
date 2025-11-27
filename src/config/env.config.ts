@@ -26,6 +26,9 @@ export const config = {
     user: env.SMTP_AUTH_USER,
     pass: env.SMTP_AUTH_PASS,
   },
+  resend: {
+    apiKey: process.env.RESEDN_API_KEY!,
+  },
   cloudinary: {
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
     api_key: process.env.CLOUDINARY_API_KEY!,

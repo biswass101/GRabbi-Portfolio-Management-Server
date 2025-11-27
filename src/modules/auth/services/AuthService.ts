@@ -10,7 +10,7 @@ import httpStatus from "http-status";
 import { AuthRepository } from "../repositories/AuthRepository";
 import { JwtPayload } from "jsonwebtoken";
 import { createEmailHtml } from "../../../html/ui/resetUi";
-import sendEmail from "../../../shared/utils/sendEmail";
+import sendEmail, { sendEmailResend } from "../../../shared/utils/sendEmail";
 
 export class AuthService {
   constructor(
@@ -148,7 +148,7 @@ export class AuthService {
 
     const resetUILink = `${config.clientSite.reset_pass_ui_link}?id=${user?._id}&token=${resetPassToken}`;
     const resetUI = createEmailHtml(user?.name, resetUILink);
-    sendEmail(user?.email, "Reset your password", resetUI);
+    console.log(await sendEmail(user?.email, "Reset your password", resetUI));
   }
 
   async resetPassword(
