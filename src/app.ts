@@ -21,6 +21,7 @@ export class App {
     this.app.use(
       cors({
         origin: ["http://localhost:8080", 
+          "http://localhost:8081",
           "https://manage-grabbi.vercel.app", 
           "https://grabbi.vercel.app", "https://grabbi-manage.onrender.com"],
         credentials: true,
